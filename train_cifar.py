@@ -308,6 +308,9 @@ def main():
             lr = lr_schedule(epoch + (i + 1) / len(train_batches))
             opt.param_groups[0].update(lr=lr)
 
+            if args.adv_models != 'None':
+                raise NotImplementedError
+
             if args.attack == 'pgd':
                 # Random initialization
                 if args.mixup:
@@ -326,6 +329,9 @@ def main():
                 robust_loss = mixup_criterion(criterion, robust_output, y_a, y_b, lam)
             else:
                 robust_loss = criterion(robust_output, y)
+
+
+
 
             if args.l1:
                 for name,param in model.named_parameters():
